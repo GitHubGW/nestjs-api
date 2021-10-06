@@ -1,3 +1,37 @@
+# NestJS-API
+
+## 🔗 Demo
+
+## 🖥 Preview
+
+## 🔥 Stack
+
+### Front-end
+
+<img height="30" src="https://img.shields.io/badge/Typescript-black?style=for-the-badge&logo=Typescript&logoColor=#3178C6"/>
+
+### Back-end
+
+<img height="30" src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=NestJS&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=Jest&logoColor=white"/>
+
+## ✅ Packages
+
+- [x] NestJS
+- [x] Typescript
+- [x] Jest
+- [x] OOP
+
+## 📖 Theory
+
+- [x] NestJS Architecture
+- [x] Module
+- [x] Controller
+- [x] Provider
+- [x] Pipe
+- [x] Dependency Injection
+- [x] Unit Testing
+- [x] E2E Testing
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
@@ -57,17 +91,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
