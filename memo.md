@@ -46,3 +46,22 @@ app.useGlobalPipes(
 - movie.service.ts같이 Service파일은 @Injectable() 데코레이터를 사용한다.
 - 이 movie.service를 movie.module처럼 module파일 안의 provider에 inject(주입)해주게 되면 파일 가장 상단에 import를 통해 movie.service를 가져오지 않아도 movie.service가 가지고 있는 메서드들을 가져와서 사용할 수 있게 된다.
 - @Injectable() 데코레이터는 클래스를 프로바이더로 표시하는 데코레이터이며, 생성자 매개변수를 통해 다른 클래스에 주입할 수 있다.
+
+#### Jest 
+
+- Jest는 자바스크립트를 아주 쉽게 테스팅하는 패키지이다.
+- .spec은 해당 파일을 테스팅을 하기 위한 파일이다.
+- Jest는 .spec파일들을 기본적으로 찾아볼 수 있도록 설정되어있다.
+- test:cov: 코드가 얼마나 테스팅 됐는지 확인할 수 있다.
+- test:watch: Jest가 모든 테스팅 파일들을 찾아서 지켜보도록 한다.
+
+#### Unit Testing
+
+- 유닛 테스팅은 모든 함수들을 따로따로 테스트하는 것을 말한다.
+- 서비스에서 분리된 유닛을 테스트하는 것을 말한다.
+- 예를들면 유닛 테스팅은 handleGetAllMovies라는 하나의 함수만 테스트하고 싶을 때 사용한다.
+
+#### End to End Testing
+
+- 엔투엔 테스팅은 전체 시스템을 테스팅하는 것을 말한다.
+- 사용자가 취할만한 모든 액션들을 처음부터 끝까지 테스트한다.
