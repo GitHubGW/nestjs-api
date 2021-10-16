@@ -65,3 +65,22 @@ app.useGlobalPipes(
 
 - 엔투엔 테스팅은 전체 시스템을 테스팅하는 것을 말한다.
 - 사용자가 취할만한 모든 액션들을 처음부터 끝까지 테스트한다.
+
+#### movie.service.spec.ts
+
+```javascript
+beforeEach(async () => {
+  const module: TestingModule = await Test.createTestingModule({
+    providers: [MovieService],
+  }).compile();
+
+  service = module.get<MovieService>(MovieService);
+  // beforeEach훅은 우리가 테스트를 실행하기 전에 실행되는 부분으로, 여기서 service.handleCreateMovie({})를 통해 영화를 미리 생성해주면 매번 테스트할 때마다 it구문 안에서 영화를 생성하지 않아도 된다.
+  service.handleCreateMovie({
+    title: 'Test Movie',
+    year: 2021,
+    rating: 8,
+    genres: ['Action'],
+  });
+});
+```
