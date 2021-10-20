@@ -60,13 +60,15 @@ app.useGlobalPipes(
 - 유닛 테스팅은 모든 함수들을 따로따로 테스트하는 것을 말한다.
 - 서비스에서 분리된 유닛을 테스트하는 것을 말한다.
 - 예를들면 유닛 테스팅은 handleGetAllMovies라는 하나의 함수만 테스트하고 싶을 때 사용한다.
+- yarn test:cov
 
 #### End to End Testing
 
 - 엔투엔 테스팅은 전체 시스템을 테스팅하는 것을 말한다.
 - 사용자가 취할만한 모든 액션들을 처음부터 끝까지 테스트한다.
+- yarn test:e2e
 
-#### movie.service.spec.ts
+#### movie.service.spec.ts (Unit Testing)
 
 ```javascript
 import { NotFoundException } from '@nestjs/common';
@@ -76,13 +78,14 @@ import { MovieService } from './movie.service';
 describe('MovieService', () => {
   let service: MovieService;
 
+  // beforeEach 훅은 우리가 테스트를 실행하기 전에 실행되는 부분이다.
+  // 여기서 service.handleCreateMovie({})를 통해 영화를 미리 생성해주면 매번 테스트할 때마다 it구문 안에서 영화를 생성하지 않아도 된다.
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [MovieService],
     }).compile();
 
     service = module.get<MovieService>(MovieService);
-    // beforeEach 훅은 우리가 테스트를 실행하기 전에 실행되는 부분으로, 여기서 service.handleCreateMovie({})를 통해 영화를 미리 생성해주면 매번 테스트할 때마다 it구문 안에서 영화를 생성하지 않아도 된다.
     service.handleCreateMovie({
       title: 'Test Movie',
       year: 2021,
@@ -219,5 +222,100 @@ describe('MovieService', () => {
     });
   });
 });
+```
 
+#### app.e2e-spec.ts (End to End Testing)
+
+```javascript
+import { Test, TestingModule } from '@nestjs/testing';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
+import * as request from 'supertest';
+import { AppModule } from './../src/app.module';
+
+describe('AppController (e2e)', () => {
+  let app: INestApplication;
+
+  // beforeAll()은 beforeEach()와 다르게 아래 테스트 함수들이 실행되기 전에 매번 호출되는 것이 아니라, 맨 처음에 딱 한 번만 호출된다. 
+  // afterAll은 맨 마지막에 딱 한번만 호출된다.
+  beforeAll(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    );
+    await app.init();
+  });
+
+  it('/ (GET)', () => {
+    return request(app.getHttpServer()).get('/').expect(200).expect('Home');
+  });
+
+  describe('/movie', () => {
+    it('/movie (GET)', () => {
+      return request(app.getHttpServer()).get('/movie').expect(200).expect([]);
+    });
+
+    it('/movie (POST)', () => {
+      return request(app.getHttpServer())
+        .post('/movie')
+        .send({ title: 'Test Movie', year: 2021, rating: 10 })
+        .expect(201);
+    });
+
+    it('/movie (POST)', () => {
+      return request(app.getHttpServer())
+        .post('/movie')
+        .send({
+          title: 'Test Movie',
+          year: 2021,
+          rating: 10,
+          bug: 'This is bug',
+        })
+        .expect(400);
+    });
+
+    it('/movie (DELETE)', () => {
+      return request(app.getHttpServer()).delete('/movie').expect(404);
+    });
+  });
+
+  describe('/movie/:id', () => {
+    it('/movie/:id (GET)', () => {
+      return request(app.getHttpServer()).get('/movie/1').expect(200);
+    });
+
+    it('/movie/:id (GET)', () => {
+      return request(app.getHttpServer()).get('/movie/999').expect(404);
+    });
+
+    it('/movie/:id (PATCH)', () => {
+      return request(app.getHttpServer())
+        .patch('/movie/1')
+        .send({ title: 'Updated Test Movie', year: 2020, rating: 9 })
+        .expect(200);
+    });
+
+    it('/movie/:id (PATCH)', () => {
+      return request(app.getHttpServer())
+        .patch('/movie/999')
+        .send({ title: 'Updated Test Movie', year: 2020, rating: 9 })
+        .expect(404);
+    });
+
+    it('/movie/delete/:id (DELETE)', () => {
+      return request(app.getHttpServer()).delete('/movie/1').expect(200);
+    });
+
+    it('/movie/delete/:id (DELETE)', () => {
+      return request(app.getHttpServer()).delete('/movie/999').expect(404);
+    });
+  });
+});
 ```
