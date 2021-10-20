@@ -6,13 +6,13 @@
 
 ## 🔥 Stack
 
-### Front-end
-
-<img height="30" src="https://img.shields.io/badge/Typescript-black?style=for-the-badge&logo=Typescript&logoColor=#3178C6"/>
-
 ### Back-end
 
-<img height="30" src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=NestJS&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=Jest&logoColor=white"/>
+<img height="30" src="https://img.shields.io/badge/Typescript-black?style=for-the-badge&logo=Typescript&logoColor=#3178C6"/> <img height="30" src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=NestJS&logoColor=white"/>
+
+### Testing
+
+<img height="30" src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=Jest&logoColor=white"/>
 
 ## ✅ Packages
 
